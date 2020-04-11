@@ -4,37 +4,55 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     [SerializeField] private float reachDistance = 3f;
-    [SerializeField] private LayerMask interactionMask;
+    [SerializeField] private LayerMask interactionMask = 1 << 9;
 
-    private IInteractable interactable;
+    private IInteractable interactable = null;
     private bool isInteracting = false;
-    
+    private Transform cam = null;
+
+    private void Awake()
+    {
+        cam = Camera.main.transform;
+    }
+
     private void Update()
     {
-        Ray ray = new Ray(this.transform.position, this.transform.forward);
-
-        if (Input.GetKeyDown(KeyCode.E) &&
-            !isInteracting && 
-            Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
+        if (Input.GetKeyUp(KeyCode.E))
         {
-            if (hit.transform.TryGetComponent(out interactable))
+            if (isInteracting)
             {
-                // start interaction
-                isInteracting = true;
-                interactable.OnInteractionBegin();
+                EndInteraction();
+                return;
+            }
+            
+            Ray ray = new Ray(cam.position, cam.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
+            {
+                if (hit.transform.TryGetComponent(out interactable))
+                {
+                    BeginInteraction();
+                }
             }
         }
 
         if (isInteracting)
         {
-            interactable.OnInteractionTick();
+            interactable?.OnInteractionTick();
         }
     }
-}
 
-public interface IInteractable
-{
-    void OnInteractionBegin();
-    void OnInteractionTick();
-    void OnInteractionEnd();
+    private void BeginInteraction()
+    {
+        isInteracting = true;
+        interactable.InteractionHandler = cam;
+        interactable?.OnInteractionBegin();
+    }
+
+    private void EndInteraction()
+    {
+        interactable?.OnInteractionEnd();
+        interactable.InteractionHandler = null;
+        isInteracting = false;
+        interactable = null;
+    }
 }
