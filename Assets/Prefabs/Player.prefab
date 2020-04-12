@@ -231,7 +231,7 @@ MonoBehaviour:
   reachDistance: 3
   interactionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 513
 --- !u!54 &4020143406746626153
 Rigidbody:
   m_ObjectHideFlags: 0

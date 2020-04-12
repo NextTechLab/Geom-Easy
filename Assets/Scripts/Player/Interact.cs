@@ -37,7 +37,12 @@ public class Interact : MonoBehaviour
 
         if (isInteracting)
         {
-            interactable?.OnInteractionTick();
+            if (interactable == null)
+            {
+                EndInteraction();
+                return;
+            }
+            interactable.OnInteractionTick(this);
         }
     }
 
@@ -45,13 +50,12 @@ public class Interact : MonoBehaviour
     {
         isInteracting = true;
         interactable.InteractionHandler = cam;
-        interactable?.OnInteractionBegin();
+        interactable?.OnInteractionBegin(this);
     }
 
-    private void EndInteraction()
+    public void EndInteraction()
     {
-        interactable?.OnInteractionEnd();
-        interactable.InteractionHandler = null;
+        interactable?.OnInteractionEnd(this);
         isInteracting = false;
         interactable = null;
     }

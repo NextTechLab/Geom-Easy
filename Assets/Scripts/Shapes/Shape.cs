@@ -3,34 +3,44 @@
 public class Shape : MonoBehaviour, IInteractable
 {
     public Shapes ShapeType => shapeType;
-    public Transform InteractionHandler { get; set; }
-    
     [SerializeField] private Shapes shapeType = Shapes.Null;
+    
     [SerializeField] private float carryOffset = 3f;
     [SerializeField][Range(0f, 60f)] private float snapSpeed = 40f;
 
     private Rigidbody rb = null;
+    private Collider boxCollider = null;
 
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
+        boxCollider = this.GetComponent<Collider>();
     }
 
-    public void OnInteractionBegin()
+    #region Interactions
+
+    public Transform InteractionHandler { get; set; }
+    public void OnInteractionBegin(Interact interactor)
     {
         rb.isKinematic = true;
+        boxCollider.enabled = false;
+
     }
 
-    public void OnInteractionTick()
+    public void OnInteractionTick(Interact interactor)
     {
-        this.transform.position = Vector3.Lerp(
+        rb.MovePosition(Vector3.Lerp(
             this.transform.position,
             InteractionHandler.position + InteractionHandler.forward * carryOffset,
-            Time.deltaTime * snapSpeed);
+            Time.deltaTime * snapSpeed));
     }
 
-    public void OnInteractionEnd()
+    public void OnInteractionEnd(Interact interactor)
     {
         rb.isKinematic = false;
+        boxCollider.enabled = true;
+
     }
+    
+    #endregion
 }
