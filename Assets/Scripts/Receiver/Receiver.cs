@@ -60,7 +60,8 @@ public class Receiver : MonoBehaviour, IInteractable
         remainingShapesRequired.Push(toSpawn);
         Instantiate(shapeDirectory.GetShapePrefab(toSpawn),
             this.transform.position,
-            Quaternion.identity);
+            Quaternion.identity).
+            GetComponent<FollowPlayer>().shouldFollowPlayer = true;
     }
 
     public void OnInteractionTick(Interact interactor)
