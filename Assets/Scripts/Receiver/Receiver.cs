@@ -8,10 +8,13 @@ public class Receiver : MonoBehaviour, IInteractable
     
     private Stack<Shapes> remainingShapesRequired = null;
     private Stack<Shapes> currentShapes = new Stack<Shapes>();
+    private StackTracker tracker = null;
 
     private void Awake()
     {
         remainingShapesRequired = new Stack<Shapes>(requiredShapes);
+        tracker = this.GetComponent<StackTracker>();
+        tracker.IsActive = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +30,10 @@ public class Receiver : MonoBehaviour, IInteractable
             if (shapeType == remainingShapesRequired.Peek())
             {
                 currentShapes.Push(remainingShapesRequired.Pop());
+                if (remainingShapesRequired.Count <= 0)
+                {
+                    tracker.IsActive = true;
+                }
                 Destroy(other.gameObject);
                 Debug.Log("fits!");
             }
@@ -47,6 +54,8 @@ public class Receiver : MonoBehaviour, IInteractable
         {
             return;
         }
+
+        tracker.IsActive = false;
         Shapes toSpawn = currentShapes.Pop();
         remainingShapesRequired.Push(toSpawn);
         Instantiate(shapeDirectory.GetShapePrefab(toSpawn),
