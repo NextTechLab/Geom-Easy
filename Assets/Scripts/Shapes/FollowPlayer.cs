@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
@@ -24,17 +25,25 @@ public class FollowPlayer : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 shouldFollowPlayer = true;
-                InvokeRepeating(nameof(MoveToPlayer), 0f, timeBetweenForces);
+                StartCoroutine(nameof(MoveToPlayer));
             }
         }
     }
 
-    private void MoveToPlayer()
+    private IEnumerator MoveToPlayer()
     {
-        Vector3 dir = player.position + (1.5f * Vector3.up) - this.transform.position;
-        if (dir.sqrMagnitude <= stoppingDistance * stoppingDistance) return;
-        
-        dir.Normalize();
-        rb.AddForce(moveForce * dir);
+        while (shouldFollowPlayer)
+        {
+            // offset upwards so it doesn't drag along at smaller distances
+            Vector3 dir = player.position + (1.5f * Vector3.up) - this.transform.position;
+            if (dir.sqrMagnitude >= stoppingDistance * stoppingDistance)
+            {
+                dir.Normalize();
+                rb.AddForce(moveForce * dir);
+            }
+            yield return new WaitForSeconds(timeBetweenForces);
+        }
+
+        yield return null;
     }
 }
