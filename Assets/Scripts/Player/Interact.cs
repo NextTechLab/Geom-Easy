@@ -9,30 +9,37 @@ public class Interact : MonoBehaviour
     private IInteractable interactable = null;
     private bool isInteracting = false;
     private Transform cam = null;
+    private Crosshair crosshair = null;
 
     private void Awake()
     {
         cam = Camera.main.transform;
+        crosshair = cam.GetComponent<Crosshair>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E))
+        bool isKeyPressed = Input.GetKeyDown(KeyCode.E);
+        if (isInteracting && isKeyPressed)
         {
-            if (isInteracting)
-            {
-                EndInteraction();
-                return;
-            }
-            
-            Ray ray = new Ray(cam.position, cam.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
+            EndInteraction();
+            return;
+        }
+        Ray ray = new Ray(cam.position, cam.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
+        {
+            crosshair.IsDisplayed = true;
+            if (isKeyPressed)
             {
                 if (hit.transform.TryGetComponent(out interactable))
                 {
                     BeginInteraction();
                 }
             }
+        }
+        else
+        {
+            crosshair.IsDisplayed = false;
         }
 
         if (isInteracting)

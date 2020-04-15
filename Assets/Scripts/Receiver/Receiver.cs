@@ -46,11 +46,9 @@ public class Receiver : MonoBehaviour, IInteractable
                 }
                 Destroy(other.gameObject);
                 addShapeEvent.Invoke(addedShape);
-                Debug.Log("fits!");
             }
             else
             {
-                Debug.Log("no fits!");
             }
         }
     }
@@ -83,7 +81,7 @@ public class Receiver : MonoBehaviour, IInteractable
 
     public void OnInteractionEnd(Interact interactor)
     {
-        Debug.Log("Interaction with pedestal done!");
+        
     }
 
     #endregion

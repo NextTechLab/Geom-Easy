@@ -96,7 +96,7 @@ MonoBehaviour:
   shouldFollowPlayer: 0
   moveForce: 150
   timeBetweenForces: 0.5
-  stoppingDistance: 8
+  stoppingDistance: 6
 --- !u!1 &6675738411863237308
 GameObject:
   m_ObjectHideFlags: 0
