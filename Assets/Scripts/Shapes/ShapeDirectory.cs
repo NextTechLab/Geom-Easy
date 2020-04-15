@@ -16,6 +16,8 @@ public class ShapeData
 {
     public Shapes ID;
     public GameObject prefab;
+    public GameObject miniature;
+    public Material material;
 }
 
 [CreateAssetMenu(menuName = "Shape Directory")]
@@ -30,6 +32,30 @@ public class ShapeDirectory : ScriptableObject
             if (ID == data.ID)
             {
                 return data.prefab;
+            }
+        }
+        throw new Exception("Directory doesn't have an entry for this ID.");
+    }
+    
+    public GameObject GetMiniaturePrefab(Shapes ID)
+    {
+        foreach (ShapeData data in directory)
+        {
+            if (ID == data.ID)
+            {
+                return data.miniature;
+            }
+        }
+        throw new Exception("Directory doesn't have an entry for this ID.");
+    }
+
+    public Material GetMaterial(Shapes ID)
+    {
+        foreach (ShapeData data in directory)
+        {
+            if (ID == data.ID)
+            {
+                return data.material;
             }
         }
         throw new Exception("Directory doesn't have an entry for this ID.");

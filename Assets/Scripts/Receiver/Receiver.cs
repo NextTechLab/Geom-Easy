@@ -1,13 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class StackAlterEvent : UnityEvent<Shapes>
+{}
 
 public class Receiver : MonoBehaviour, IInteractable
 {
-    [SerializeField] private List<Shapes> requiredShapes = new List<Shapes>();
+    public List<Shapes> requiredShapes = new List<Shapes>();
     [SerializeField] private ShapeDirectory shapeDirectory = null;
+
+    [HideInInspector] public Stack<Shapes> remainingShapesRequired = null;
+    [HideInInspector] public Stack<Shapes> currentShapes = new Stack<Shapes>();
     
-    private Stack<Shapes> remainingShapesRequired = null;
-    private Stack<Shapes> currentShapes = new Stack<Shapes>();
+    [HideInInspector] public StackAlterEvent addShapeEvent = new StackAlterEvent();
+    [HideInInspector] public StackAlterEvent removeShapeEvent = new StackAlterEvent();
+    
     private StackTracker tracker = null;
 
     private void Awake()
@@ -29,12 +38,14 @@ public class Receiver : MonoBehaviour, IInteractable
             Shapes shapeType = other.GetComponent<Shape>().ShapeType;
             if (shapeType == remainingShapesRequired.Peek())
             {
-                currentShapes.Push(remainingShapesRequired.Pop());
+                Shapes addedShape = remainingShapesRequired.Pop();
+                currentShapes.Push(addedShape);
                 if (remainingShapesRequired.Count <= 0)
                 {
                     tracker.IsActive = true;
                 }
                 Destroy(other.gameObject);
+                addShapeEvent.Invoke(addedShape);
                 Debug.Log("fits!");
             }
             else
@@ -56,12 +67,13 @@ public class Receiver : MonoBehaviour, IInteractable
         }
 
         tracker.IsActive = false;
-        Shapes toSpawn = currentShapes.Pop();
-        remainingShapesRequired.Push(toSpawn);
-        Instantiate(shapeDirectory.GetShapePrefab(toSpawn),
-            this.transform.position,
+        Shapes removedShape = currentShapes.Pop();
+        remainingShapesRequired.Push(removedShape);
+        Instantiate(shapeDirectory.GetShapePrefab(removedShape),
+            this.transform.position + 0.5f * this.transform.forward,
             Quaternion.identity).
             GetComponent<FollowPlayer>().shouldFollowPlayer = true;
+        removeShapeEvent.Invoke(removedShape);
     }
 
     public void OnInteractionTick(Interact interactor)

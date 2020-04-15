@@ -13,14 +13,29 @@ MonoBehaviour:
   m_Name: Shape Directory
   m_EditorClassIdentifier: 
   directory:
+  - ID: 4
+    prefab: {fileID: 0}
+    miniature: {fileID: 0}
+    material: {fileID: 2100000, guid: d9218a1d10df33e43b6e093bcb47b246, type: 2}
   - ID: 0
     prefab: {fileID: 4586451509006805024, guid: b2511832efeee594bbc7240e134b8ae3,
       type: 3}
+    miniature: {fileID: 9041131738839735191, guid: 449b137bf538b7b4c90342e46604c4c6,
+      type: 3}
+    material: {fileID: 2100000, guid: cf76ff32845ced24a869af5710ded7f8, type: 2}
   - ID: 1
     prefab: {fileID: 7396848246720989825, guid: 712fb700266ba7547aa716dfc357e7ab,
       type: 3}
+    miniature: {fileID: 8178249533379114205, guid: fafacabf54a81b04fa4dd28b506fecba,
+      type: 3}
+    material: {fileID: 2100000, guid: bdaa1caa67ab45140bd6fa9fee885923, type: 2}
   - ID: 2
     prefab: {fileID: 0}
+    miniature: {fileID: 0}
+    material: {fileID: 0}
   - ID: 3
     prefab: {fileID: 6164311574903706530, guid: 1c03f033c1881ff46981d68f84ee881f,
       type: 3}
+    miniature: {fileID: 1027794141879205785, guid: bb600b14c44126a4b9bfc8f20297762d,
+      type: 3}
+    material: {fileID: 2100000, guid: 35f4b6553976a354ab50bfed8072b844, type: 2}
