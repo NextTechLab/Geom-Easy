@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -68,7 +67,7 @@ public class Receiver : MonoBehaviour, IInteractable
         Shapes removedShape = currentShapes.Pop();
         remainingShapesRequired.Push(removedShape);
         Instantiate(shapeDirectory.GetShapePrefab(removedShape),
-            this.transform.position + 0.5f * this.transform.forward,
+            this.transform.position + 1f * -this.transform.right,
             Quaternion.identity).
             GetComponent<FollowPlayer>().shouldFollowPlayer = true;
         removeShapeEvent.Invoke(removedShape);

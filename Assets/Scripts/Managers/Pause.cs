@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
@@ -11,9 +10,18 @@ public class Pause : MonoBehaviour
     private void Update()
     {
         if (!canPause) return;
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             pausePanel.SetActive(isPaused.Toggle());
+            if (isPaused)
+            {
+                AudioManager.Instance.Distort();
+            }
+            else
+            {
+                AudioManager.Instance.Undistort();
+            }
             
             if (!Cursor.visible)
             {
@@ -27,7 +35,7 @@ public class Pause : MonoBehaviour
 
         Time.timeScale = isPaused ? 0f : 1f;
     }
-    
+
     private void UnlockMouse()
     {
         Cursor.lockState = CursorLockMode.None;

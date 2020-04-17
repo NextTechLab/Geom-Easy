@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interact : MonoBehaviour
 {
@@ -28,10 +27,10 @@ public class Interact : MonoBehaviour
         Ray ray = new Ray(cam.position, cam.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
         {
-            crosshair.IsDisplayed = true;
-            if (isKeyPressed)
+            if (hit.transform.TryGetComponent(out interactable))            
             {
-                if (hit.transform.TryGetComponent(out interactable))
+                crosshair.IsDisplayed = true;
+                if (isKeyPressed)
                 {
                     BeginInteraction();
                 }

@@ -19,7 +19,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void Update()
     {
-        // debug code
+        // TODO: remove debug code
         if (!shouldFollowPlayer)
         {
             if (Input.GetKeyDown(KeyCode.Q))

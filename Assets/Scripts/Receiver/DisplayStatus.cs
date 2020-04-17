@@ -20,7 +20,7 @@ public class DisplayStatus : MonoBehaviour
             GameObject miniature = Instantiate(
                 directory.GetMiniaturePrefab(receiver.requiredShapes[currentSlot]),
                 miniatureHolder[currentSlot].position,
-                Quaternion.identity,
+                miniatureHolder[currentSlot].rotation,
                 miniatureHolder[currentSlot]);
 
             miniature.GetComponent<Renderer>().material = directory.GetMaterial(Shapes.Null);
