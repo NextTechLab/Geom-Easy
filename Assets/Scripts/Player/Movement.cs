@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour
 
         if (isGrounded && velocity.y < 0f)
         {
-            velocity.y = -1f;
+            velocity.y = -0.5f;
         }
 
         xInput = Input.GetAxis("Horizontal");

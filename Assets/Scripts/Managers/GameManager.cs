@@ -4,9 +4,9 @@ using UnityEngine;
 [System.Serializable]
 class Level
 {
-    public Animator door;
-    public List<StackTracker> receivers;
-    public string animParameter;
+    public Animator door = null;
+    public List<StackTracker> receivers = new List<StackTracker>();
+    public string animParameter = "";
 
     public void CompleteLevel()
     {
@@ -43,4 +43,5 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+
 }

@@ -47,5 +47,14 @@ public class Pause : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    
+
+    public void ToggleMute()
+    {
+        AudioManager.Instance.ToggleMute();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

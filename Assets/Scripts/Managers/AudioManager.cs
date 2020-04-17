@@ -15,13 +15,9 @@ public class AudioManager : Singleton<AudioManager>
         PlayMenuTrack();
     }
 
-    public void Mute()
+    public void ToggleMute()
     {
-        source.mute = true;
-    }
-    public void Unmute()
-    {
-        source.mute = false;
+        source.mute = !source.mute;
     }
 
     public void Distort()
@@ -36,7 +32,7 @@ public class AudioManager : Singleton<AudioManager>
     
     public void PlayMenuTrack()
     {
-        source.clip = introTrack;
+        source.clip = mainTrack;
         source.loop = true;
         source.volume = 0.7f;
         source.Play();

@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldFollowPlayer: 0
-  moveForce: 150
+  moveForce: 250
   timeBetweenForces: 0.5
   stoppingDistance: 6
 --- !u!1 &4375842433627849917
@@ -141,7 +141,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
