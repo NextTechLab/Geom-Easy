@@ -11,10 +11,15 @@ public class FollowPlayer : MonoBehaviour
     
     private Transform player = null;
     private Rigidbody rb = null;
+    private Vector3 initialPosition = Vector3.zero;
+    
     private void Awake()
     {
         player = Camera.main.transform.parent;
         rb = this.GetComponent<Rigidbody>();
+        initialPosition = this.transform.position;
+        StartCoroutine(nameof(MoveToPlayer));
+
     }
 
     private void Update()
@@ -25,18 +30,24 @@ public class FollowPlayer : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 shouldFollowPlayer = true;
-                StartCoroutine(nameof(MoveToPlayer));
             }
         }
     }
 
     private IEnumerator MoveToPlayer()
     {
+        // offset upwards so it doesn't drag along at smaller distances
+        Vector3 dir = player.position + (1.5f * Vector3.up) - this.transform.position;
+        float sqrMagnitude = dir.sqrMagnitude;
+        if (sqrMagnitude > 10000f)
+        {
+            // sanity check
+            this.transform.position = initialPosition;
+        }
         while (shouldFollowPlayer)
         {
-            // offset upwards so it doesn't drag along at smaller distances
-            Vector3 dir = player.position + (1.5f * Vector3.up) - this.transform.position;
-            if (dir.sqrMagnitude >= stoppingDistance * stoppingDistance)
+            
+            if (sqrMagnitude >= stoppingDistance * stoppingDistance)
             {
                 dir.Normalize();
                 rb.AddForce(moveForce * dir);

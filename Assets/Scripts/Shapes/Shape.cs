@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Shape : MonoBehaviour, IInteractable
 {
@@ -15,6 +16,7 @@ public class Shape : MonoBehaviour, IInteractable
     {
         rb = this.GetComponent<Rigidbody>();
         boxCollider = this.GetComponent<Collider>();
+        
     }
 
     #region Interactions
@@ -24,7 +26,6 @@ public class Shape : MonoBehaviour, IInteractable
     {
         rb.isKinematic = true;
         boxCollider.enabled = false;
-
     }
 
     public void OnInteractionTick(Interact interactor)
@@ -37,9 +38,13 @@ public class Shape : MonoBehaviour, IInteractable
 
     public void OnInteractionEnd(Interact interactor)
     {
+        Ray ray = new Ray(InteractionHandler.position, InteractionHandler.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, carryOffset, 1 << 8))
+        {
+            rb.MovePosition(hit.point + 0.5f * Vector3.up);
+        }
         rb.isKinematic = false;
         boxCollider.enabled = true;
-
     }
     
     #endregion

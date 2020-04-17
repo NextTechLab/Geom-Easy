@@ -25,6 +25,16 @@ PrefabInstance:
       propertyPath: hopForce
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 131230977498828316, guid: 2ab212a6e1d74254aac5f5cb04baa1fd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865065532980902229, guid: 2ab212a6e1d74254aac5f5cb04baa1fd,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.18431373
+      objectReference: {fileID: 0}
     - target: {fileID: 2306113327305571985, guid: 2ab212a6e1d74254aac5f5cb04baa1fd,
         type: 3}
       propertyPath: m_Height

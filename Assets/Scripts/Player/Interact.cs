@@ -18,19 +18,20 @@ public class Interact : MonoBehaviour
 
     private void Update()
     {
-        bool isKeyPressed = Input.GetKeyDown(KeyCode.E);
+        Ray ray = new Ray(cam.position, cam.forward);
+        bool isKeyPressed = Input.GetKeyUp(KeyCode.E);
+        bool isLookingAtInteractable = Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask);
         if (isInteracting && isKeyPressed)
         {
             EndInteraction();
             return;
         }
-        Ray ray = new Ray(cam.position, cam.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, reachDistance, interactionMask))
+        if (isLookingAtInteractable)
         {
-            if (hit.transform.TryGetComponent(out interactable))            
+            crosshair.IsDisplayed = true;
+            if (isKeyPressed)
             {
-                crosshair.IsDisplayed = true;
-                if (isKeyPressed)
+                if (hit.transform.TryGetComponent(out interactable))
                 {
                     BeginInteraction();
                 }
